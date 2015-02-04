@@ -14,7 +14,12 @@ def ask_twitterhandle
 	answer = gets.chomp.downcase
 end
 
+tweet_corrector = TweetCorrector.new(client)
+
 # get twitter user name
+tweet_corrector.set_user
 
 # find latest tweet
+tweet = tweet_corrector.find_last_tweet
 
+puts tweet # Should print tweet
