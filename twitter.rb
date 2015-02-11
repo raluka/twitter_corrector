@@ -1,4 +1,5 @@
 require 'twitter'
+require_relative 'tweet_corrector'
 
 # See: http://www.rubydoc.info/gems/twitter
 client = Twitter::REST::Client.new do |config|
@@ -10,14 +11,15 @@ puts client.search("railsgirls")
 
 #print question for user
 def ask_twitterhandle
-	puts "Tell me a twitterhandle!"
-	answer = gets.chomp.downcase
-end
+  puts "Tell me a twitterhandle!"
+  gets.chomp.downcase
 
+end
+answer = ask_twitterhandle
 tweet_corrector = TweetCorrector.new(client)
 
 # get twitter user name
-tweet_corrector.set_user
+tweet_corrector.set_user(answer)
 
 # find latest tweet
 tweet = tweet_corrector.find_last_tweet
