@@ -10,30 +10,28 @@ class UserIO
 end
 
 class TwitterHandler
+  # See: http://www.rubydoc.info/gems/twitter
 
     def initialize
-    @twitter_client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV.fetch("TWITTER_KEY")
-      config.consumer_secret     = "key2"
-    end
+      config = {
+          consumer_key:    ENV.fetch("TWITTER_CONSUMER_KEY"),
+          consumer_secret: ENV.fetch("TWITTER_CONSUMER_SECRET")
+      }
+
+     @twitter_client = Twitter::REST::Client.new(config)
   end
 
   def last_tweet(username)
-    @twitter_client.search(username)
+    @twitter_client.user_timeline(username, count: 1).first.full_text
   end
 
-  private
-
-  #search for client
-  def search_for_user
-    @twitter_client.search(@user)
-  end
-  #search for client's last tweet
-  #return last tweet
 end
 
 class TweetCorrect
+  def spell_checker(string)
+    string.split(/\.(?=[\w])/)
 
+  end
 end
 
 
